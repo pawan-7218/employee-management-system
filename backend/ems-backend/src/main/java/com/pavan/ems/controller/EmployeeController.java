@@ -1,5 +1,6 @@
 package com.pavan.ems.controller;
 
+import com.pavan.ems.dto.EmployeeDTO;
 import com.pavan.ems.entity.Employee;
 import com.pavan.ems.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
@@ -16,24 +17,28 @@ public class EmployeeController {
     public EmployeeController(EmployeeService service) {
         this.service = service;
     }
-
     @PostMapping
-    public Employee create(@RequestBody Employee employee) {
-        return service.saveEmployee(employee);
-    }
+public EmployeeDTO create(@RequestBody EmployeeDTO dto) {
+    return service.saveEmployee(dto);
+}
 
-    @GetMapping
-    public List<Employee> getAll() {
-        return service.getAllEmployees();
-    }
+@GetMapping
+public List<EmployeeDTO> getAll() {
+    return service.getAllEmployees();
+}
 
-    @GetMapping("/{id}")
-    public Employee getById(@PathVariable Long id) {
-        return service.getEmployeeById(id);
-    }
+@GetMapping("/{id}")
+public EmployeeDTO getById(@PathVariable Long id) {
+    return service.getEmployeeById(id);
+}
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteEmployee(id);
-    }
+@PutMapping("/{id}")
+public EmployeeDTO update(@PathVariable Long id, @RequestBody EmployeeDTO dto) {
+    return service.updateEmployee(id, dto);
+}
+
+@DeleteMapping("/{id}")
+public void delete(@PathVariable Long id) {
+    service.deleteEmployee(id);
+
 }
