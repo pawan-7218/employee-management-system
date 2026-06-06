@@ -3,6 +3,9 @@ package com.pavan.ems.controller;
 import com.pavan.ems.dto.EmployeeDTO;
 import com.pavan.ems.entity.Employee;
 import com.pavan.ems.service.EmployeeService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,13 @@ public class EmployeeController {
         this.service = service;
     }
     @PostMapping
-public EmployeeDTO create(@RequestBody EmployeeDTO dto) {
+public EmployeeDTO create(@Valid @RequestBody EmployeeDTO dto) {
     return service.saveEmployee(dto);
+}
+
+@PutMapping("/{id}")
+public EmployeeDTO update(@PathVariable Long id, @Valid @RequestBody EmployeeDTO dto) {
+    return service.updateEmployee(id, dto);
 }
 
 @GetMapping
@@ -32,13 +40,11 @@ public EmployeeDTO getById(@PathVariable Long id) {
     return service.getEmployeeById(id);
 }
 
-@PutMapping("/{id}")
-public EmployeeDTO update(@PathVariable Long id, @RequestBody EmployeeDTO dto) {
-    return service.updateEmployee(id, dto);
-}
+
 
 @DeleteMapping("/{id}")
 public void delete(@PathVariable Long id) {
     service.deleteEmployee(id);
 
+}
 }
