@@ -2,6 +2,7 @@ import { useState,useEffect } from "react";
 import { getEmployees } from "../services/employeeService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 import { deleteEmployee } from "../services/employeeService";
 
 import {
@@ -14,7 +15,7 @@ import {
   Paper,
 } from "@mui/material";
 
-export default function EmployeeTable({employees,refreshEmployees,}) {
+export default function EmployeeTable({employees,refreshEmployees,onEdit}) {
    const handleDelete = async (id) => {
     const confirmed = window.confirm("Delete this employee?");
 
@@ -57,6 +58,11 @@ export default function EmployeeTable({employees,refreshEmployees,}) {
               <TableCell>{employee.email}</TableCell>
               <TableCell>{employee.department}</TableCell>
               <TableCell>
+                  <IconButton
+    onClick={() => onEdit(employee)}
+  >
+    <EditIcon />
+  </IconButton>
   <IconButton
     onClick={() => handleDelete(employee.id)}
   >

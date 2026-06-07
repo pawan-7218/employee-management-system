@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { createEmployee } from "../services/employeeService";
+import { useEffect,useState } from "react";
+import { createEmployee,updateEmployee } from "../services/employeeService";
 
 import {
   Button,
@@ -9,8 +9,10 @@ import {
   Box,
 } from "@mui/material";
 
-export default function EmployeeForm({refreshEmployees}) {
+export default function EmployeeForm({ refreshEmployees,
+  selectedEmployee,}) {
   const [employee, setEmployee] = useState({
+    id:null,
     firstName: "",
     lastName: "",
     email: "",
@@ -19,6 +21,11 @@ export default function EmployeeForm({refreshEmployees}) {
     salary: "",
     joiningDate: "",
   });
+  useEffect(() => {
+  if (selectedEmployee) {
+    setEmployee(selectedEmployee);
+  }
+}, [selectedEmployee]);
 
   const handleChange = (e) => {
     setEmployee({
@@ -31,10 +38,15 @@ export default function EmployeeForm({refreshEmployees}) {
     e.preventDefault();
 
     try {
-      await createEmployee(employee);
-
+     if (employee.id) {
+  await updateEmployee(employee.id, employee);
+  alert("Employee Updated Successfully!");
+} else {
+  await createEmployee(employee);
+  alert("Employee Added Successfully!");
+}
 refreshEmployees();
-      alert("Employee Added Successfully!");
+      
 
       setEmployee({
         firstName: "",
@@ -114,10 +126,9 @@ refreshEmployees();
           value={employee.joiningDate}
           onChange={handleChange}
         />
-
-        <Button variant="contained" type="submit">
-          Add Employee
-        </Button>
+<Button variant="contained" type="submit">
+  {employee.id ? "Update Employee" : "Add Employee"}
+</Button>
       </Box>
     </Paper>
   );

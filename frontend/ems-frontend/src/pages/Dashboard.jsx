@@ -5,6 +5,7 @@ import { getEmployees } from "../services/employeeService";
 
 export default function Dashboard() {
   const [employees, setEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const loadEmployees = () => {
     getEmployees()
@@ -20,10 +21,10 @@ export default function Dashboard() {
     <div style={{ padding: "20px" }}>
       <h2>Employee Dashboard</h2>
 
-      <EmployeeForm refreshEmployees={loadEmployees} />
+      <EmployeeForm refreshEmployees={loadEmployees} selectedEmployee={selectedEmployee} />
 
       <EmployeeTable  employees={employees}
-  refreshEmployees={loadEmployees} />
+  refreshEmployees={loadEmployees}    onEdit={setSelectedEmployee}/>
     </div>
   );
 }
