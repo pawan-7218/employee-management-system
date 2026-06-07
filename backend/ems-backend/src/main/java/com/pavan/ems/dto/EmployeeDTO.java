@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class EmployeeDTO {
-
+ private Long id;
     @NotBlank(message = "First name is required")
     private String firstName;
 
