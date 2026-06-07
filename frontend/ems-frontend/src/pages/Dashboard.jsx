@@ -7,6 +7,9 @@ export default function Dashboard() {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
+  // ✅ ADDED: Dialog control state
+  const [openForm, setOpenForm] = useState(false);
+
   const loadEmployees = () => {
     getEmployees()
       .then((response) => setEmployees(response.data))
@@ -17,14 +20,41 @@ export default function Dashboard() {
     loadEmployees();
   }, []);
 
+  // ✅ ADDED: Add employee handler
+  const handleAddEmployee = () => {
+    setSelectedEmployee(null);
+    setOpenForm(true);
+  };
+
+  // ✅ ADDED: Edit employee handler
+  const handleEditEmployee = (employee) => {
+    setSelectedEmployee(employee);
+    setOpenForm(true);
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h2>Employee Dashboard</h2>
 
-      <EmployeeForm refreshEmployees={loadEmployees} selectedEmployee={selectedEmployee} />
+      {/* ✅ ADDED: Add Employee Button */}
+      <button onClick={handleAddEmployee}>
+        Add Employee
+      </button>
 
-      <EmployeeTable  employees={employees}
-  refreshEmployees={loadEmployees}    onEdit={setSelectedEmployee}/>
+      {/* Employee Form (UPDATED PROPS ONLY) */}
+      <EmployeeForm
+        refreshEmployees={loadEmployees}
+        selectedEmployee={selectedEmployee}
+        open={openForm}
+        setOpen={setOpenForm}
+      />
+
+      {/* Employee Table (UPDATED onEdit ONLY) */}
+      <EmployeeTable
+        employees={employees}
+        refreshEmployees={loadEmployees}
+        onEdit={handleEditEmployee}
+      />
     </div>
   );
 }
