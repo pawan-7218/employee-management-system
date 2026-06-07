@@ -1,5 +1,8 @@
 import { useState,useEffect } from "react";
 import { getEmployees } from "../services/employeeService";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import { deleteEmployee } from "../services/employeeService";
 
 import {
   Table,
@@ -11,14 +14,26 @@ import {
   Paper,
 } from "@mui/material";
 
-export default function EmployeeTable() {
-  const [employees, setEmployees] = useState([]);
+export default function EmployeeTable({employees,refreshEmployees,}) {
+   const handleDelete = async (id) => {
+    const confirmed = window.confirm("Delete this employee?");
 
-  useEffect(() => {
-    getEmployees()
-      .then((response) => setEmployees(response.data))
-      .catch((error) => console.error(error));
-  }, []);
+    if (!confirmed) return;
+
+    try {
+      console.log("Deleting ID:", id);
+
+      await deleteEmployee(id);
+
+      refreshEmployees();
+
+      alert("Employee deleted successfully");
+    } catch (error) {
+      console.error(error);
+      console.error(error.response);
+      alert("Delete failed");
+    }
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -29,6 +44,8 @@ export default function EmployeeTable() {
             <TableCell>Last Name</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Department</TableCell>
+            <TableCell>Actions</TableCell>
+
           </TableRow>
         </TableHead>
 
@@ -39,6 +56,13 @@ export default function EmployeeTable() {
               <TableCell>{employee.lastName}</TableCell>
               <TableCell>{employee.email}</TableCell>
               <TableCell>{employee.department}</TableCell>
+              <TableCell>
+  <IconButton
+    onClick={() => handleDelete(employee.id)}
+  >
+    <DeleteIcon />
+  </IconButton>
+</TableCell>
             </TableRow>
           ))}
         </TableBody>

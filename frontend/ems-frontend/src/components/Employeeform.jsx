@@ -9,7 +9,7 @@ import {
   Box,
 } from "@mui/material";
 
-export default function EmployeeForm() {
+export default function EmployeeForm({refreshEmployees}) {
   const [employee, setEmployee] = useState({
     firstName: "",
     lastName: "",
@@ -33,6 +33,7 @@ export default function EmployeeForm() {
     try {
       await createEmployee(employee);
 
+refreshEmployees();
       alert("Employee Added Successfully!");
 
       setEmployee({
