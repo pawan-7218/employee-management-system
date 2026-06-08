@@ -4,6 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import { deleteEmployee } from "../services/employeeService";
+import { isAdmin } from "../utils/auth";
 
 import {
   Table,
@@ -100,14 +101,18 @@ export default function EmployeeTable({ employees, refreshEmployees, onEdit }) {
                 <TableCell>{employee.department}</TableCell>
 
                 <TableCell>
-                  <IconButton onClick={() => onEdit(employee)}>
-                    <EditIcon />
-                  </IconButton>
+  {isAdmin() && (
+    <>
+      <IconButton onClick={() => onEdit(employee)}>
+        <EditIcon />
+      </IconButton>
 
-                  <IconButton onClick={() => handleDelete(employee.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
+      <IconButton onClick={() => handleDelete(employee.id)}>
+        <DeleteIcon />
+      </IconButton>
+    </>
+  )}
+</TableCell>
               </TableRow>
             ))}
           </TableBody>
