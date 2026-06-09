@@ -3,7 +3,7 @@ import EmployeeForm from "../components/EmployeeForm";
 import EmployeeTable from "../components/EmployeeTable";
 import { getEmployees } from "../services/employeeService";
 import { useNavigate } from "react-router-dom";
-import { isAdmin } from "../utils/auth";
+import { isAdmin } from "../utils/Auth";
 
 export default function Dashboard() {
   const [employees, setEmployees] = useState([]);

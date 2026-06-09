@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import { deleteEmployee } from "../services/employeeService";
-import { isAdmin } from "../utils/auth";
+import { isAdmin } from "../utils/Auth";
 
 import {
   Table,

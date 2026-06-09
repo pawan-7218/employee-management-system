@@ -1,6 +1,6 @@
 # React
-frontend/node_modules/
-frontend/dist/
+frontend/ems-frontend/node_modules/
+frontend/ems-fronten/dist/
 
 # Spring Boot
 backend/ems-backend/target/
